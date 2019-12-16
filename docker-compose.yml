@@ -6,6 +6,16 @@ services:
       - "5432:5432"
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+  pgweb:
+    container_name: pgweb
+    restart: always
+    image: sosedoff/pgweb
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
+    depends_on:
+      - db
   server:
     tty: true
     stdin_open: true
